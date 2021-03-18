@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO.Ports;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -16,34 +17,35 @@ namespace Terminal
         public static StopBits _stopBits = StopBits.One;
 
 
-        static SerialPort myPort;
+        public static SerialPort currentPort { get; private set;}
 
         public static bool InitPort()
         {
-            myPort = new SerialPort(_comName, _baudRate, _parity, _dataBits, _stopBits);
+            currentPort = new SerialPort(_comName, _baudRate, _parity, _dataBits, _stopBits);
             try
             {
-                myPort.Open();
+                currentPort.Open();
                 return true;
             }
             catch (System.IO.FileNotFoundException ex)
             {
                 return false;
             }
+            
         }
 
         public static void Close()
         {
 
-            myPort.Close();
-            myPort.Dispose();
+            currentPort.Close();
+            currentPort.Dispose();
             
         }
 
         public static async Task<string> Receive()
         {
             byte[] receiveBuffer = new byte[1024];
-            var numBytesReaden = await myPort.BaseStream.ReadAsync(receiveBuffer);
+            var numBytesReaden = await currentPort.BaseStream.ReadAsync(receiveBuffer);
             return Encoding.UTF8.GetString(receiveBuffer, 0, numBytesReaden);
         }
 
@@ -52,12 +54,12 @@ namespace Terminal
             if (inputString == "+++" || inputString == "\\0")
             {
                 byte[] sendBuffer = Encoding.UTF8.GetBytes(inputString);
-                await myPort.BaseStream.WriteAsync(sendBuffer);
+                await currentPort.BaseStream.WriteAsync(sendBuffer);
             }
             else
             {
                 byte[] sendBuffer = Encoding.UTF8.GetBytes(inputString + "\r\n");
-                await myPort.BaseStream.WriteAsync(sendBuffer);
+                await currentPort.BaseStream.WriteAsync(sendBuffer);
 
             }
         }
@@ -84,7 +86,13 @@ namespace Terminal
         }
 
        
+        public static void GetAvailablePorts()
+        {
+            var parentWindow = Window.GetWindow(Application.Current.MainWindow) as Windows_Terminal.MainWindow;
+            var ports = SerialPort.GetPortNames();
 
+            ports.ToList().ForEach(p => parentWindow.PortsBox.Items.Add(p));
+        }
 
     }
 }

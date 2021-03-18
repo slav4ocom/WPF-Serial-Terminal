@@ -5,6 +5,7 @@ using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
+using Terminal;
 
 namespace Windows_Terminal
 {
@@ -13,5 +14,6 @@ namespace Windows_Terminal
     /// </summary>
     public partial class App : Application
     {
+        
     }
 }

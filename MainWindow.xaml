@@ -5,51 +5,31 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Windows_Terminal"
         mc:Ignorable="d"
-        Title="slav4o.com Terminal" Height="450" Width="800">
+        Title="slav4o.com Terminal" Height="450" Width="800"
+        Loaded="InitMenus">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="0*"/>
 
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
-        <Menu Grid.ColumnSpan="2" HorizontalAlignment="Left" Height="19" VerticalAlignment="Top" Width="119" Margin="0,4,0,0">
+        <Menu Grid.ColumnSpan="2" HorizontalAlignment="Left" Height="19" VerticalAlignment="Top" Width="77" Margin="0,4,0,0">
             <MenuItem Header="File&#xD;&#xA;" Height="17">
                 <Separator/>
                 <MenuItem Header="Exit" Click="ProgramExit"/>
             </MenuItem>
-            <MenuItem Header="Baud&#xD;&#xA;" Height="18" Click="MenuItem_Click_3" >
-                <MenuItem Header="manual"/>
-                <MenuItem Header="230400" Click="MenuItem_Click_230"/>
-                <MenuItem Header="115200" Click="MenuItem_Click_115"/>
-                <MenuItem Header="57600" Click="MenuItem_Click_57"/>
-                <MenuItem Header="56000" Click="MenuItem_Click_56"/>
-                <MenuItem Header="38400" Click="MenuItem_Click_38"/>
-                <MenuItem Header="28800" Click="MenuItem_Click_28"/>
-                <MenuItem Header="19200" Click="MenuItem_Click_19"/>
-                <MenuItem Header="14400" Click="MenuItem_Click_14"/>
-                <MenuItem Header="9600" Click="MenuItem_Click_9"/>
-                <MenuItem Header="4800" Click="MenuItem_Click_4"/>
-                <MenuItem Header="2400" Click="MenuItem_Click_2"/>
-                <MenuItem Header="1200" Click="MenuItem_Click_1"/>
-                <MenuItem Header="600" Click="MenuItem_Click_06" />
-                <MenuItem Header="300" Click="MenuItem_Click_03" />
-                <MenuItem Header="110" Click="MenuItem_Click_01" />
-            </MenuItem>
-            <MenuItem Header="Com&#xD;&#xA;" Height="18" Click="MenuItem_Click">
-                <MenuItem Header="COM1" Click="SetComName_Click_COM1" />
-                <MenuItem Header="COM2" Click="SetComName_Click_COM2" />
-                <MenuItem Header="COM3" Click="SetComName_Click_COM3" />
-                <MenuItem Header="COM4" Click="SetComName_Click_COM4" />
-                <MenuItem Header="COM5" Click="SetComName_Click_COM5" />
-            </MenuItem>
         </Menu>
         <Label Name="Label1" Content="115200" HorizontalAlignment="Left" Height="23" Margin="328,20,0,0" VerticalAlignment="Top" Width="104" Grid.Column="1"/>
         <Label Name="Label2" Content="COM5" Grid.ColumnSpan="2" HorizontalAlignment="Left" Height="23" Margin="269,20,0,0" VerticalAlignment="Top" Width="49"/>
-        <Label Name="Label3" Content="" Grid.ColumnSpan="2" HorizontalAlignment="Left" Height="23" Margin="423,20,0,0" VerticalAlignment="Top" Width="49"/>
         <TextBox Name="TextBox1"  Grid.ColumnSpan="2" HorizontalAlignment="Left" Height="319" Margin="34,0,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Center" Width="625" VerticalScrollBarVisibility="Auto"/>
         <Button Name="ConnectButton"  Content="▶" Grid.ColumnSpan="2" HorizontalAlignment="Left" Height="23" Margin="191,20,0,0" VerticalAlignment="Top" Width="23" Click="ConnectButton_Click"/>
         <Button Name="DisconnectButton" IsEnabled="False" Content="■" Grid.ColumnSpan="2" HorizontalAlignment="Left" Height="23" Margin="214,20,0,0" VerticalAlignment="Top" Width="23" Click="DisconnectButton_Click"/>
         <TextBox Name="TextBox2" KeyDown="Send" Grid.ColumnSpan="2" HorizontalAlignment="Left" Height="18" Margin="34,382,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="425"/>
+        <ComboBox Name="PortsBox" MouseEnter="RefreshPorts" SelectedIndex="0" Grid.ColumnSpan="2" HorizontalAlignment="Left" Height="19" Margin="30,4,0,0" VerticalAlignment="Top" Width="61" SelectionChanged="PortsBox_SelectionChanged" />
+        <ComboBox Name="BaudsBox" SelectedIndex="0" Grid.ColumnSpan="2" HorizontalAlignment="Left" Height="19" Margin="91,4,0,0" VerticalAlignment="Top" Width="72" SelectionChanged="BaudBox_SelectionChanged" />
+        <Button Name="ClearButton" Content="✗" Grid.ColumnSpan="2" HorizontalAlignment="Left" Height="23" Margin="465,377,0,0" VerticalAlignment="Top" Width="23" Click="ClearButton_Click"/>
+        <CheckBox Content="RTS" Grid.ColumnSpan="2" HorizontalAlignment="Left" Height="15" Margin="414,26,0,0" VerticalAlignment="Top" Width="46" Checked="RTSBox_Checked" Unchecked="RTSBox_Unchecked"/>
+        <CheckBox Content="DTR" Grid.ColumnSpan="2" HorizontalAlignment="Left" Height="25" Margin="466,26,0,0" VerticalAlignment="Top" Width="90" Checked="DTRBox_Checked" Unchecked="DTRBox_Unchecked"/>
 
     </Grid>
 </Window>
